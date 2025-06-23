@@ -1,23 +1,19 @@
-# اول طريقة
+import streamlit as st
 import random
-print("Welcome to 'whose wallet!' ")
-print("You will give me a list of names, and I will pick a person to pay")
-names_string = input("If you're ready, enter the names separated by a comma ")
-names = names_string.split(", ")
-length = len(names) -1
-random_number = random.randint(0,length)
-random_person = names[random_number]
-print(f"Please ask '{random_person}' to take his wallet out. Dinner is on him")
 
+st.title("💸 Whose Wallet?")
+st.write("Welcome to 'whose wallet!' 👋")
+st.write("You will give me a list of names, and I will pick a person to pay.")
 
-# تاني طريقة
-import random
-print("Welcome to 'whose wallet!' ")
-print("You will give me a list of names, and I will pick a person to pay")
-names = input("If you're ready, enter the names separated by a comma ").split(", ")
-print(f"Please ask {random.choice(names) } to take his wallet out. Dinner is on him.")
+names_string = st.text_input("If you're ready, enter the names separated by a comma:")
 
-# تالت طريقة
-import random
-print("Welcome to 'whose wallet!'\nYou will give me a list of names, and I will pick a person to pay ")
-print(f"Please ask {random.choice(input("enter the names separated by a comma: ") .split(", ")) } to take his wallet out. Dinner is on him.")
+if st.button("Pick someone to pay"):
+    if names_string.strip():
+        names = [name.strip() for name in names_string.split(",") if name.strip()]
+        if names:
+            chosen = random.choice(names)
+            st.success(f"Please ask *{chosen}* to take their wallet out. Dinner is on them 😅")
+        else:
+            st.warning("Please enter at least one valid name.")
+    else:
+        st.warning("You must enter some names first.")
